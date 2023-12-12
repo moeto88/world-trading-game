@@ -151,7 +151,6 @@ export default {
         },
         accept(tradingPartner, item, quantity, payment) {
             const requestIndex = this.trade_requests.findIndex((req) => req.tradingPartner == tradingPartner)
-            console.log(requestIndex)
             this.trade_requests.splice(requestIndex, 1)
             this.socket.emit("acceptTradeRequest", this.user.id, this.room.id, tradingPartner, item, quantity, payment)
         },

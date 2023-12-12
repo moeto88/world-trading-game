@@ -1,8 +1,13 @@
 const express = require("express")
-// const path = require("path")
-// const serveStatic = require("serve-static")
+const bodyParser = require("body-parser");
+
+const path = __dirname + '/app/views/';
+
 const app = express()
-// app.use(serveStatic(__dirname + '/dist'))
+app.use(express.static(path));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 const http = require("http")
 const expServer = http.createServer(app)
 
@@ -261,11 +266,16 @@ io.on("connection", (socket) => {
     })
 })
 
-// const PORT = process.env.PORT || 5000
-const PORT = process.env.PORT || 3000
+app.get('/', function (req,res) {
+    res.sendFile(path + "index.html");
+});
+
+const PORT = process.env.PORT || 8080
 expServer.listen(PORT, () => {
-    console.log("Listening at :3000...")
+    console.log("Listening at :8080...")
 })
+
+
 
 function generateRoomId() {
     const id = Math.floor(Math.random() * 8999 + 1000);
